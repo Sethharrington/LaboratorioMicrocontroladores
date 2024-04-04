@@ -10,22 +10,30 @@ void delay(unsigned int tiempo);
 // MAIN
 void main(void)
 {
-	unsigned int result;
-	TRISIO = 0b00001000; // Poner todos los pines como salidas
-	GPIO = 0x00;		 // Poner pines en bajo
-	ANSEL = 0b00001000;
-	// TRISA = 0;
-
-	unsigned int time = 120;
+	// Declaracion de variables
+	unsigned int result = 1;
+	TRISIO = 0b00001000;	 // Poner todos los pines como salidas
+	GPIO = 0x00;			 // Poner pines en bajo
+	ANSEL = 0b0001000;		 // Habilitar el GP3 como entrada analogica
+	unsigned int time = 150; // Tiempo de espera
 
 	// Loop forever
 	while (1)
 	{
-		result = 4;
+		// Se encarga del numero aleatorio
+		// mientras el ususario no hay presionado el boton
+		// El loop se encarga de incrementar el resultado
+		// En el momento que el usuario presiona el boton
+		// se obtiene un numero aleatorio.
+		(result >= 6) ? result = 1 : result++;
+
+		// Se activa cuando se presiona el boton (GP3 recibe una senal analogica en alto)
 		if (GP3)
 		{
 			// for (result = 1; result < 7; result++)
 			// {
+
+			// Enciende cada uno de los leds respectivamente segun el numero
 			switch (result)
 			{
 			case 1:
@@ -37,24 +45,23 @@ void main(void)
 			case 3:
 				GPIO = 0x05;
 				break;
-
 			case 4:
-				GPIO = 0x06; // GPIO = 0x0110
+				GPIO = 0x06;
 				break;
-
 			case 5:
-				GPIO = 0x07; // 0x0111
+				GPIO = 0x07;
 				break;
-
 			case 6:
 				GPIO = 0x16;
 				break;
+
+			// Enciende error
 			default:
-				GPIO = 0x04;
+				GPIO = 0x31;
 			}
+			// Tiempo de espera encendido
 			delay(time);
 			GPIO = 0x00;
-			delay(time);
 			//}
 		}
 	}
