@@ -1,6 +1,6 @@
 gplink-1.4.0 #1107 (Apr  3 2018)
 Copyright (c) 1998-2014 gputils project
-Listing File Generated: 4-3-2024  16:08:02
+Listing File Generated: 4-3-2024  18:03:12
  
  
 Address  Value    Disassembly              Source
@@ -32,8 +32,10 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            ; external declarations
                                            ;--------------------------------------------------------
+                                           	extern	_ANSEL
                                            	extern	_TRISIO
                                            	extern	_GPIO
+                                           	extern	_GPIObits
                                            	extern	__sdcc_gsinit_startup
                                            ;--------------------------------------------------------
                                            ; global declarations
@@ -87,8 +89,6 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            UDL_labo1_B83712_0	udata
                                            r0x1008	res	1
-                                           r0x1009	res	1
-                                           r0x100A	res	1
                                            r0x1001	res	1
                                            r0x1000	res	1
                                            r0x1002	res	1
@@ -125,143 +125,109 @@ Address  Value    Disassembly              Source
                                            ;functions called:
                                            ;   _delay
                                            ;   _delay
-                                           ;4 compiler assigned registers:
+                                           ;   _delay
+                                           ;   _delay
+                                           ;2 compiler assigned registers:
                                            ;   r0x1008
-                                           ;   r0x1009
-                                           ;   r0x100A
                                            ;   STK00
                                            ;; Starting pCode block
                                            S_labo1_B83712__main	code
                                            _main:
                                            ; 2 exit points
-                                           ;	.line	14; "labo1_B83712.c"	TRISIO = 0b00000000; // Poner todos los pines como salidas
-00009e   1683     bsf     0x03, 0x5        	BANKSEL	_TRISIO
-00009f   0185     clrf    0x05             	CLRF	_TRISIO
+                                           ;	.line	14; "labo1_B83712.c"	TRISIO = 0b00001000; // Poner todos los pines como salidas
+00009e   3008     movlw   0x08             	MOVLW	0x08
+00009f   1683     bsf     0x03, 0x5        	BANKSEL	_TRISIO
+0000a0   0085     movwf   0x05             	MOVWF	_TRISIO
                                            ;	.line	15; "labo1_B83712.c"	GPIO = 0x00;		 // Poner pines en bajo
-0000a0   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
-0000a1   0185     clrf    0x05             	CLRF	_GPIO
-                                           _00123_DS_:
-                                           ;	.line	25; "labo1_B83712.c"	for (result = 1; result < 7; result++)
-0000a2   3001     movlw   0x01             	MOVLW	0x01
-0000a3   00bc     movwf   0x3c             	MOVWF	r0x1008
-0000a4   01bd     clrf    0x3d             	CLRF	r0x1009
-                                           ;;unsigned compare: left < lit(0x1=1), size=2
-                                           _00117_DS_:
-                                           ;	.line	28; "labo1_B83712.c"	switch (result)
-0000a5   3000     movlw   0x00             	MOVLW	0x00
-0000a6   023d     subwf   0x3d, 0x0        	SUBWF	r0x1009,W
-0000a7   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
-0000a8   28ab     goto    0x00ab           	GOTO	_00142_DS_
-0000a9   3001     movlw   0x01             	MOVLW	0x01
-0000aa   023c     subwf   0x3c, 0x0        	SUBWF	r0x1008,W
-                                           _00142_DS_:
-0000ab   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
-0000ac   28dc     goto    0x00dc           	GOTO	_00111_DS_
-                                           ;;genSkipc:3307: created from rifx:0x7fff26adfd50
-                                           ;;swapping arguments (AOP_TYPEs 1/2)
-                                           ;;unsigned compare: left >= lit(0x7=7), size=2
-0000ad   3000     movlw   0x00             	MOVLW	0x00
-0000ae   023d     subwf   0x3d, 0x0        	SUBWF	r0x1009,W
-0000af   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
-0000b0   28b3     goto    0x00b3           	GOTO	_00143_DS_
-0000b1   3007     movlw   0x07             	MOVLW	0x07
-0000b2   023c     subwf   0x3c, 0x0        	SUBWF	r0x1008,W
-                                           _00143_DS_:
-0000b3   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
-0000b4   28dc     goto    0x00dc           	GOTO	_00111_DS_
-                                           ;;genSkipc:3307: created from rifx:0x7fff26adfd50
-0000b5   033c     decf    0x3c, 0x0        	DECF	r0x1008,W
-0000b6   00be     movwf   0x3e             	MOVWF	r0x100A
-0000b7   3000     movlw   0x00             	MOVLW	HIGH(_00144_DS_)
-0000b8   008a     movwf   0x0a             	MOVWF	PCLATH
-0000b9   30be     movlw   0xbe             	MOVLW	_00144_DS_
-0000ba   073e     addwf   0x3e, 0x0        	ADDWF	r0x100A,W
-0000bb   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
-0000bc   0a8a     incf    0x0a, 0x1        	INCF	PCLATH,F
-0000bd   0082     movwf   0x02             	MOVWF	PCL
-                                           _00144_DS_:
-0000be   28c4     goto    0x00c4           	GOTO	_00105_DS_
-0000bf   28c8     goto    0x00c8           	GOTO	_00106_DS_
-0000c0   28cc     goto    0x00cc           	GOTO	_00107_DS_
-0000c1   28d0     goto    0x00d0           	GOTO	_00108_DS_
-0000c2   28d4     goto    0x00d4           	GOTO	_00109_DS_
-0000c3   28d8     goto    0x00d8           	GOTO	_00110_DS_
+0000a1   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000a2   0185     clrf    0x05             	CLRF	_GPIO
+                                           ;	.line	16; "labo1_B83712.c"	ANSEL = 0b00001000;
+0000a3   3008     movlw   0x08             	MOVLW	0x08
+0000a4   1683     bsf     0x03, 0x5        	BANKSEL	_ANSEL
+0000a5   009f     movwf   0x1f             	MOVWF	_ANSEL
+                                           _00116_DS_:
+                                           ;	.line	25; "labo1_B83712.c"	if (GP3)
+0000a6   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000a7   1d85     btfss   0x05, 0x3        	BTFSS	_GPIObits,3
+0000a8   28a6     goto    0x00a6           	GOTO	_00116_DS_
+                                           ;	.line	29; "labo1_B83712.c"	switch (result)
+0000a9   3003     movlw   0x03             	MOVLW	0x03
+0000aa   00bc     movwf   0x3c             	MOVWF	r0x1008
+0000ab   3000     movlw   0x00             	MOVLW	HIGH(_00130_DS_)
+0000ac   008a     movwf   0x0a             	MOVWF	PCLATH
+0000ad   30b2     movlw   0xb2             	MOVLW	_00130_DS_
+0000ae   073c     addwf   0x3c, 0x0        	ADDWF	r0x1008,W
+0000af   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+0000b0   0a8a     incf    0x0a, 0x1        	INCF	PCLATH,F
+0000b1   0082     movwf   0x02             	MOVWF	PCL
+                                           _00130_DS_:
+0000b2   28b8     goto    0x00b8           	GOTO	_00105_DS_
+0000b3   28bc     goto    0x00bc           	GOTO	_00106_DS_
+0000b4   28c0     goto    0x00c0           	GOTO	_00107_DS_
+0000b5   28c4     goto    0x00c4           	GOTO	_00108_DS_
+0000b6   28c8     goto    0x00c8           	GOTO	_00109_DS_
+0000b7   28cc     goto    0x00cc           	GOTO	_00110_DS_
                                            _00105_DS_:
-                                           ;	.line	31; "labo1_B83712.c"	GPIO = 0x01;
-0000c4   3001     movlw   0x01             	MOVLW	0x01
+                                           ;	.line	32; "labo1_B83712.c"	GPIO = 0x01;
+0000b8   3001     movlw   0x01             	MOVLW	0x01
+0000b9   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000ba   0085     movwf   0x05             	MOVWF	_GPIO
+                                           ;	.line	33; "labo1_B83712.c"	break;
+0000bb   28cf     goto    0x00cf           	GOTO	_00112_DS_
+                                           _00106_DS_:
+                                           ;	.line	35; "labo1_B83712.c"	GPIO = 0x02;
+0000bc   3002     movlw   0x02             	MOVLW	0x02
+0000bd   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000be   0085     movwf   0x05             	MOVWF	_GPIO
+                                           ;	.line	36; "labo1_B83712.c"	break;
+0000bf   28cf     goto    0x00cf           	GOTO	_00112_DS_
+                                           _00107_DS_:
+                                           ;	.line	38; "labo1_B83712.c"	GPIO = 0x05;
+0000c0   3005     movlw   0x05             	MOVLW	0x05
+0000c1   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000c2   0085     movwf   0x05             	MOVWF	_GPIO
+                                           ;	.line	39; "labo1_B83712.c"	break;
+0000c3   28cf     goto    0x00cf           	GOTO	_00112_DS_
+                                           _00108_DS_:
+                                           ;	.line	42; "labo1_B83712.c"	GPIO = 0x06; // GPIO = 0x0110
+0000c4   3006     movlw   0x06             	MOVLW	0x06
 0000c5   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
 0000c6   0085     movwf   0x05             	MOVWF	_GPIO
-                                           ;	.line	32; "labo1_B83712.c"	break;
-0000c7   28df     goto    0x00df           	GOTO	_00112_DS_
-                                           _00106_DS_:
-                                           ;	.line	34; "labo1_B83712.c"	GPIO = 0x02;
-0000c8   3002     movlw   0x02             	MOVLW	0x02
+                                           ;	.line	43; "labo1_B83712.c"	break;
+0000c7   28cf     goto    0x00cf           	GOTO	_00112_DS_
+                                           _00109_DS_:
+                                           ;	.line	46; "labo1_B83712.c"	GPIO = 0x07; // 0x0111
+0000c8   3007     movlw   0x07             	MOVLW	0x07
 0000c9   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
 0000ca   0085     movwf   0x05             	MOVWF	_GPIO
-                                           ;	.line	35; "labo1_B83712.c"	break;
-0000cb   28df     goto    0x00df           	GOTO	_00112_DS_
-                                           _00107_DS_:
-                                           ;	.line	37; "labo1_B83712.c"	GPIO = 0x05;
-0000cc   3005     movlw   0x05             	MOVLW	0x05
+                                           ;	.line	47; "labo1_B83712.c"	break;
+0000cb   28cf     goto    0x00cf           	GOTO	_00112_DS_
+                                           _00110_DS_:
+                                           ;	.line	50; "labo1_B83712.c"	GPIO = 0x16;
+0000cc   3016     movlw   0x16             	MOVLW	0x16
 0000cd   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
 0000ce   0085     movwf   0x05             	MOVWF	_GPIO
-                                           ;	.line	38; "labo1_B83712.c"	break;
-0000cf   28df     goto    0x00df           	GOTO	_00112_DS_
-                                           _00108_DS_:
-                                           ;	.line	41; "labo1_B83712.c"	GPIO = 0x06; // GPIO = 0x0110
-0000d0   3006     movlw   0x06             	MOVLW	0x06
-0000d1   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
-0000d2   0085     movwf   0x05             	MOVWF	_GPIO
-                                           ;	.line	42; "labo1_B83712.c"	break;
-0000d3   28df     goto    0x00df           	GOTO	_00112_DS_
-                                           _00109_DS_:
-                                           ;	.line	45; "labo1_B83712.c"	GPIO = 0x07; // 0x0111
-0000d4   3007     movlw   0x07             	MOVLW	0x07
-0000d5   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
-0000d6   0085     movwf   0x05             	MOVWF	_GPIO
-                                           ;	.line	46; "labo1_B83712.c"	break;
-0000d7   28df     goto    0x00df           	GOTO	_00112_DS_
-                                           _00110_DS_:
-                                           ;	.line	49; "labo1_B83712.c"	GPIO = 0x16;
-0000d8   3016     movlw   0x16             	MOVLW	0x16
-0000d9   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
-0000da   0085     movwf   0x05             	MOVWF	_GPIO
-                                           ;	.line	50; "labo1_B83712.c"	break;
-0000db   28df     goto    0x00df           	GOTO	_00112_DS_
-                                           _00111_DS_:
-                                           ;	.line	52; "labo1_B83712.c"	GPIO = 0x04;
-0000dc   3004     movlw   0x04             	MOVLW	0x04
-0000dd   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
-0000de   0085     movwf   0x05             	MOVWF	_GPIO
                                            _00112_DS_:
-                                           ;	.line	54; "labo1_B83712.c"	delay(time);
-0000df   3078     movlw   0x78             	MOVLW	0x78
-0000e0   00af     movwf   0x2f             	MOVWF	STK00
-0000e1   3000     movlw   0x00             	MOVLW	0x00
+                                           ;	.line	55; "labo1_B83712.c"	delay(time);
+0000cf   3078     movlw   0x78             	MOVLW	0x78
+0000d0   00af     movwf   0x2f             	MOVWF	STK00
+0000d1   3000     movlw   0x00             	MOVLW	0x00
                                            	PAGESEL	_delay
-0000e2   2126     call    0x0126           	CALL	_delay
+0000d2   210f     call    0x010f           	CALL	_delay
                                            	PAGESEL	$
-                                           ;	.line	55; "labo1_B83712.c"	GPIO = 0x00;
-0000e3   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
-0000e4   0185     clrf    0x05             	CLRF	_GPIO
-                                           ;	.line	25; "labo1_B83712.c"	for (result = 1; result < 7; result++)
-0000e5   0abc     incf    0x3c, 0x1        	INCF	r0x1008,F
-0000e6   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
-0000e7   0abd     incf    0x3d, 0x1        	INCF	r0x1009,F
-                                           ;;unsigned compare: left < lit(0x7=7), size=2
-0000e8   3000     movlw   0x00             	MOVLW	0x00
-0000e9   023d     subwf   0x3d, 0x0        	SUBWF	r0x1009,W
-0000ea   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
-0000eb   28ee     goto    0x00ee           	GOTO	_00145_DS_
-0000ec   3007     movlw   0x07             	MOVLW	0x07
-0000ed   023c     subwf   0x3c, 0x0        	SUBWF	r0x1008,W
-                                           _00145_DS_:
-0000ee   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
-0000ef   28a5     goto    0x00a5           	GOTO	_00117_DS_
-                                           ;;genSkipc:3307: created from rifx:0x7fff26adfd50
-0000f0   28a2     goto    0x00a2           	GOTO	_00123_DS_
-                                           ;	.line	58; "labo1_B83712.c"	}
-0000f1   0008     return                   	RETURN	
+                                           ;	.line	56; "labo1_B83712.c"	GPIO = 0x00;
+0000d3   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+0000d4   0185     clrf    0x05             	CLRF	_GPIO
+                                           ;	.line	57; "labo1_B83712.c"	delay(time);
+0000d5   3078     movlw   0x78             	MOVLW	0x78
+0000d6   00af     movwf   0x2f             	MOVWF	STK00
+0000d7   3000     movlw   0x00             	MOVLW	0x00
+                                           	PAGESEL	_delay
+0000d8   210f     call    0x010f           	CALL	_delay
+                                           	PAGESEL	$
+0000d9   28a6     goto    0x00a6           	GOTO	_00116_DS_
+                                           ;	.line	61; "labo1_B83712.c"	}
+0000da   0008     return                   	RETURN	
                                            ; exit point of _main
                                            
                                            ;***
@@ -282,59 +248,59 @@ Address  Value    Disassembly              Source
                                            S_labo1_B83712__delay	code
                                            _delay:
                                            ; 2 exit points
-                                           ;	.line	60; "labo1_B83712.c"	void delay(unsigned int tiempo)
-000126   00c0     movwf   0x40             	MOVWF	r0x1000
-000127   082f     movf    0x2f, 0x0        	MOVF	STK00,W
-000128   00bf     movwf   0x3f             	MOVWF	r0x1001
-                                           ;	.line	65; "labo1_B83712.c"	for (i = 0; i < tiempo; i++)
-000129   01c1     clrf    0x41             	CLRF	r0x1002
-00012a   01c2     clrf    0x42             	CLRF	r0x1003
-                                           _00156_DS_:
-00012b   0840     movf    0x40, 0x0        	MOVF	r0x1000,W
-00012c   0242     subwf   0x42, 0x0        	SUBWF	r0x1003,W
-00012d   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
-00012e   2931     goto    0x0131           	GOTO	_00177_DS_
-00012f   083f     movf    0x3f, 0x0        	MOVF	r0x1001,W
-000130   0241     subwf   0x41, 0x0        	SUBWF	r0x1002,W
-                                           _00177_DS_:
-000131   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
-000132   294c     goto    0x014c           	GOTO	_00158_DS_
-                                           ;;genSkipc:3307: created from rifx:0x7fff26adfd50
-                                           ;	.line	66; "labo1_B83712.c"	for (j = 0; j < 1275; j++)
-000133   30fb     movlw   0xfb             	MOVLW	0xfb
-000134   00c3     movwf   0x43             	MOVWF	r0x1004
-000135   3004     movlw   0x04             	MOVLW	0x04
-000136   00c4     movwf   0x44             	MOVWF	r0x1005
-                                           _00154_DS_:
-000137   30ff     movlw   0xff             	MOVLW	0xff
-000138   0743     addwf   0x43, 0x0        	ADDWF	r0x1004,W
-000139   00c5     movwf   0x45             	MOVWF	r0x1006
-00013a   30ff     movlw   0xff             	MOVLW	0xff
-00013b   00c6     movwf   0x46             	MOVWF	r0x1007
-00013c   0844     movf    0x44, 0x0        	MOVF	r0x1005,W
-00013d   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
-00013e   0f44     incfsz  0x44, 0x0        	INCFSZ	r0x1005,W
-00013f   07c6     addwf   0x46, 0x1        	ADDWF	r0x1007,F
-000140   0845     movf    0x45, 0x0        	MOVF	r0x1006,W
-000141   00c3     movwf   0x43             	MOVWF	r0x1004
-000142   0846     movf    0x46, 0x0        	MOVF	r0x1007,W
-000143   00c4     movwf   0x44             	MOVWF	r0x1005
-000144   0846     movf    0x46, 0x0        	MOVF	r0x1007,W
-000145   0445     iorwf   0x45, 0x0        	IORWF	r0x1006,W
-000146   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
-000147   2937     goto    0x0137           	GOTO	_00154_DS_
-                                           ;	.line	65; "labo1_B83712.c"	for (i = 0; i < tiempo; i++)
-000148   0ac1     incf    0x41, 0x1        	INCF	r0x1002,F
-000149   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
-00014a   0ac2     incf    0x42, 0x1        	INCF	r0x1003,F
-00014b   292b     goto    0x012b           	GOTO	_00156_DS_
-                                           _00158_DS_:
-                                           ;	.line	68; "labo1_B83712.c"	}
-00014c   0008     return                   	RETURN	
+                                           ;	.line	63; "labo1_B83712.c"	void delay(unsigned int tiempo)
+00010f   00be     movwf   0x3e             	MOVWF	r0x1000
+000110   082f     movf    0x2f, 0x0        	MOVF	STK00,W
+000111   00bd     movwf   0x3d             	MOVWF	r0x1001
+                                           ;	.line	68; "labo1_B83712.c"	for (i = 0; i < tiempo; i++)
+000112   01bf     clrf    0x3f             	CLRF	r0x1002
+000113   01c0     clrf    0x40             	CLRF	r0x1003
+                                           _00141_DS_:
+000114   083e     movf    0x3e, 0x0        	MOVF	r0x1000,W
+000115   0240     subwf   0x40, 0x0        	SUBWF	r0x1003,W
+000116   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000117   291a     goto    0x011a           	GOTO	_00162_DS_
+000118   083d     movf    0x3d, 0x0        	MOVF	r0x1001,W
+000119   023f     subwf   0x3f, 0x0        	SUBWF	r0x1002,W
+                                           _00162_DS_:
+00011a   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+00011b   2935     goto    0x0135           	GOTO	_00143_DS_
+                                           ;;genSkipc:3307: created from rifx:0x7ffdb6468a90
+                                           ;	.line	69; "labo1_B83712.c"	for (j = 0; j < 1275; j++)
+00011c   30fb     movlw   0xfb             	MOVLW	0xfb
+00011d   00c1     movwf   0x41             	MOVWF	r0x1004
+00011e   3004     movlw   0x04             	MOVLW	0x04
+00011f   00c2     movwf   0x42             	MOVWF	r0x1005
+                                           _00139_DS_:
+000120   30ff     movlw   0xff             	MOVLW	0xff
+000121   0741     addwf   0x41, 0x0        	ADDWF	r0x1004,W
+000122   00c3     movwf   0x43             	MOVWF	r0x1006
+000123   30ff     movlw   0xff             	MOVLW	0xff
+000124   00c4     movwf   0x44             	MOVWF	r0x1007
+000125   0842     movf    0x42, 0x0        	MOVF	r0x1005,W
+000126   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000127   0f42     incfsz  0x42, 0x0        	INCFSZ	r0x1005,W
+000128   07c4     addwf   0x44, 0x1        	ADDWF	r0x1007,F
+000129   0843     movf    0x43, 0x0        	MOVF	r0x1006,W
+00012a   00c1     movwf   0x41             	MOVWF	r0x1004
+00012b   0844     movf    0x44, 0x0        	MOVF	r0x1007,W
+00012c   00c2     movwf   0x42             	MOVWF	r0x1005
+00012d   0844     movf    0x44, 0x0        	MOVF	r0x1007,W
+00012e   0443     iorwf   0x43, 0x0        	IORWF	r0x1006,W
+00012f   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000130   2920     goto    0x0120           	GOTO	_00139_DS_
+                                           ;	.line	68; "labo1_B83712.c"	for (i = 0; i < tiempo; i++)
+000131   0abf     incf    0x3f, 0x1        	INCF	r0x1002,F
+000132   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000133   0ac0     incf    0x40, 0x1        	INCF	r0x1003,F
+000134   2914     goto    0x0114           	GOTO	_00141_DS_
+                                           _00143_DS_:
+                                           ;	.line	71; "labo1_B83712.c"	}
+000135   0008     return                   	RETURN	
                                            ; exit point of _delay
                                            
                                            
                                            ;	code size estimation:
-                                           ;	  113+   12 =   125 instructions (  274 byte)
+                                           ;	   89+   15 =   104 instructions (  238 byte)
                                            
                                            	end
