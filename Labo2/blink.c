@@ -27,7 +27,7 @@ int main(void)
       boton = 1;
       DDRA = boton;
     }
-    if (boton == 1 && count > 100)
+    if (boton == 1 && count > 10000)
       state = 2;
 
     switch (state)
@@ -49,7 +49,7 @@ int main(void)
       PORTB = 0x24; // Se encienden B2: amarillo vehicular y B5: rojo peatonal
       _delay_ms(30000);
       PORTB = 0x28; // B3: rojo vehicular y B5: rojo peatonal
-      _delay_ms(2000);
+      _delay_ms(10000);
       state = 3; // Paso peatonal
       break;
 
@@ -77,6 +77,5 @@ int main(void)
       PORTB = 0x21; // Se encienden B1: verde vehicular y B5: rojo peatonal
       break;
     }
-    _delay_ms(10000);
   }
 }
