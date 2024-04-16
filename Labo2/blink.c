@@ -22,19 +22,19 @@ int main(void)
     count++;
     DDRA = boton;
     DDRD = count;
-    if (PINB > 0x3F)
-    {
-      boton = 1;
-      DDRA = boton;
-    }
-    if (boton == 1 && count > 10000)
-      state = 2;
 
     switch (state)
     {
     // Paso Vehicular
     case 1:
       PORTB = 0x22; // Se encienden B1: verde vehicular y B5: rojo peatonal
+      if (PINB > 0x3F)
+      {
+        boton = 1;
+        DDRA = boton;
+      }
+      if (boton == 1 && count > 10000)
+        state = 2;
       break;
 
     // Se presiona un boton
