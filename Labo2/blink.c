@@ -42,9 +42,9 @@ int main(void)
       for (count = 0; count < 3; count++)
       {
         PORTB = 0x20; // NoB1: apaga verde vehicular y B5: rojo peatonal
-        _delay_ms(10000);
+        _delay_ms(5000);
         PORTB = 0x22; // Se encienden B1: verde vehicular y B5: rojo peatonal
-        _delay_ms(10000);
+        _delay_ms(5000);
       }
       PORTB = 0x24; // Se encienden B2: amarillo vehicular y B5: rojo peatonal
       _delay_ms(30000);
@@ -60,9 +60,9 @@ int main(void)
       for (count = 0; count < 3; count++)
       {
         PORTB = 0x08; // B3: rojo vehicular y NoB4: verde peatonal
-        _delay_ms(10000);
+        _delay_ms(5000);
         PORTB = 0x18; // B3: rojo vehicular y B4: verde peatonal
-        _delay_ms(10000);
+        _delay_ms(5000);
       }
       PORTB = 0x28; // B3: rojo vehicular y B5: rojo peatonal
       _delay_ms(10000);
